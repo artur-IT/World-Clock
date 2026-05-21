@@ -27,7 +27,7 @@ function App() {
         <ClockPlus offsetHours={offsetHours} />
       </div>
 
-      <WorldMap />
+      <WorldMap offsetHours={offsetHours} />
     </>
   );
 }

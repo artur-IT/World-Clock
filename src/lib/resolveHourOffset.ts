@@ -1,6 +1,6 @@
-const MAX_OFFSET_HOURS = 11;
+const MAX_OFFSET_HOURS = 12;
 
-/** Pick offset closest to the current drag position, clamped to ±11 hours. */
+/** Pick offset closest to the current drag position, clamped to ±12 hours. */
 export function resolveHourOffset(
   baseHourIndex: number,
   targetHourIndex: number,
@@ -9,7 +9,8 @@ export function resolveHourOffset(
   const forward =
     (targetHourIndex - baseHourIndex + 12) % 12; // 0..11 clockwise steps
 
-  const candidates = forward === 0 ? [0] : [forward, forward - 12];
+  // Same dial position can mean 0, +12, or -12; keep dragging past ±11.
+  const candidates = forward === 0 ? [0, 12, -12] : [forward, forward - 12];
 
   let best = candidates[0];
   let bestDistance = Math.abs(candidates[0] - currentOffset);
