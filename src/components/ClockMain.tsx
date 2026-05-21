@@ -2,19 +2,25 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styles from '../styles/clockMain.module.css';
 
 function getHourHandAngle(date: Date) {
-  const h12 = date.getHours() % 12; // 0..11
+  const h12 = date.getHours() % 12;
   return h12 * 30; // 360 / 12 = 30 deg per hour
 }
 
 const DIAL_NUMBERS = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as const;
 
-export function ClockMain() {
-  // `baseAngleDeg` tracks the real device time.
-  // `offsetHours` stores how much the user shifted the clock via drag (in hours).
+type ClockMainProps = {
+  offsetHours?: number;
+  onOffsetHoursChange?: (offsetHours: number) => void;
+};
+
+export function ClockMain({
+  offsetHours = 0,
+  onOffsetHoursChange,
+}: ClockMainProps) {
+  // `offsetHours` comes from the parent so other clocks can update live.
   const [baseAngleDeg, setBaseAngleDeg] = useState(() =>
     getHourHandAngle(new Date()),
   );
-  const [offsetHours, setOffsetHours] = useState(0);
   const hourHandRef = useRef<HTMLDivElement | null>(null);
   const activePointerIdRef = useRef<number | null>(null);
 
@@ -62,7 +68,7 @@ export function ClockMain() {
     let diff = (targetHourIndex - baseHourIndex + 12) % 12; // 0..11 forward steps
     if (diff > 6) diff -= 12; // map to negative steps
 
-    setOffsetHours(diff);
+    onOffsetHoursChange?.(diff);
   }
 
   useEffect(() => {

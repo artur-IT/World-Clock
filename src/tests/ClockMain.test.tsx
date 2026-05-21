@@ -1,5 +1,8 @@
+/// <reference types="jest" />
+
+import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { ClockMain } from './ClockMain';
+import { ClockMain } from '../components/ClockMain';
 
 function expectedHour12(hour24: number) {
   const h12 = hour24 % 12;

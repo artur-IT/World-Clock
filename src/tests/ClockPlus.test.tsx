@@ -1,11 +1,14 @@
+/// <reference types="jest" />
+
+import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { ClockPlus } from './ClockPlus';
+import { ClockPlus } from '../components/ClockPlus';
 
 describe('ClockPlus', () => {
-  it('renders description for +1 hour clock', () => {
+  it('renders mini analog clock for +1 hour', () => {
     render(<ClockPlus />);
     expect(
-      screen.getByText(/Clock \+1 hour according main clock time/i),
+      screen.getByRole('img', { name: /Analog mini clock \+1 hour/i }),
     ).toBeInTheDocument();
   });
 });
