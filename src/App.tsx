@@ -1,4 +1,5 @@
 import './App.css';
+import { useState } from 'react';
 import { ClockMinus } from './components/ClockMinus';
 import { ClockMain } from './components/ClockMain';
 import { ClockPlus } from './components/ClockPlus';
@@ -13,12 +14,17 @@ const style = {
 };
 
 function App() {
+  const [offsetHours, setOffsetHours] = useState(0);
+
   return (
     <>
       <div style={style}>
-        <ClockMinus />
-        <ClockMain />
-        <ClockPlus />
+        <ClockMinus offsetHours={offsetHours} />
+        <ClockMain
+          offsetHours={offsetHours}
+          onOffsetHoursChange={setOffsetHours}
+        />
+        <ClockPlus offsetHours={offsetHours} />
       </div>
 
       <WorldMap />
