@@ -1,0 +1,132 @@
+.clockMain {
+  --size: 300px;
+  --ring: rgba(0, 0, 0, 0.35);
+  --hand: rgba(255, 255, 255, 0.95);
+  --shadow: rgba(0, 0, 0, 0.35);
+  width: var(--size);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  position: relative;
+  background: rgb(2, 169, 235);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+  border: 2px solid var(--ring);
+  user-select: none;
+}
+
+.dialNumbers {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.num {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-origin: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  user-select: none;
+}
+
+.num1 {
+  transform: translate(-50%, -50%) rotate(0deg) translateY(-128px) rotate(0deg);
+}
+
+.num2 {
+  transform: translate(-50%, -50%) rotate(30deg) translateY(-128px) rotate(-30deg);
+}
+
+.num3 {
+  transform: translate(-50%, -50%) rotate(60deg) translateY(-128px) rotate(-60deg);
+}
+
+.num4 {
+  transform: translate(-50%, -50%) rotate(90deg) translateY(-128px) rotate(-90deg);
+}
+
+.num5 {
+  transform: translate(-50%, -50%) rotate(120deg) translateY(-128px) rotate(-120deg);
+}
+
+.num6 {
+  transform: translate(-50%, -50%) rotate(150deg) translateY(-128px) rotate(-150deg);
+}
+
+.num7 {
+  transform: translate(-50%, -50%) rotate(180deg) translateY(-128px) rotate(-180deg);
+}
+
+.num8 {
+  transform: translate(-50%, -50%) rotate(210deg) translateY(-128px) rotate(-210deg);
+}
+
+.num9 {
+  transform: translate(-50%, -50%) rotate(240deg) translateY(-128px) rotate(-240deg);
+}
+
+.num10 {
+  transform: translate(-50%, -50%) rotate(270deg) translateY(-128px) rotate(-270deg);
+}
+
+.num11 {
+  transform: translate(-50%, -50%) rotate(300deg) translateY(-128px) rotate(-300deg);
+}
+
+.num12 {
+  transform: translate(-50%, -50%) rotate(330deg) translateY(-128px) rotate(-330deg);
+}
+
+.hand {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0.6rem;
+  height: 32%;
+  transform-origin: 50% 100%;
+  transform: translate(-50%, -100%) rotate(var(--angle-deg));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.6));
+  border-radius: 8px;
+  box-shadow: 0 6px 16px var(--shadow);
+}
+
+.hand::before {
+  /* hand tip */
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -10px;
+  width: 0;
+  height: 0;
+  transform: translateX(-50%);
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 18px solid var(--hand);
+}
+
+.centerCap {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.6));
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
