@@ -50,7 +50,8 @@ export function ClockPlus({ offsetHours = 0 }: ClockPlusProps) {
   const displayAngleDeg = useUnwrappedDisplayAngle(angleDeg);
 
   const cssVars = {
-    '--angle-deg': `${displayAngleDeg}deg`,    '--size': '160px',
+    '--angle-deg': `${displayAngleDeg}deg`,
+    '--size': '160px',
     '--bg': 'rgb(255, 215, 0)',
   } as CSSProperties;
 
@@ -71,6 +72,7 @@ export function ClockPlus({ offsetHours = 0 }: ClockPlusProps) {
       </div>
       <div className={styles.hand} style={{ width: '0.4rem' }} />
       <div className={styles.centerCap} />
+      <p className={styles.title}>+1 Hour</p>
     </div>
   );
 }

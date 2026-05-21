@@ -6,11 +6,22 @@ import { ClockPlus } from './components/ClockPlus';
 import { WorldMap } from './components/WorldMap';
 
 const style = {
-  display: 'flex' as const,
-  flexDirection: 'row' as const,
-  justifyContent: 'center' as const,
-  alignItems: 'center' as const,
-  gap: '10px' as const,
+  wrapper: {
+    display: 'flex' as const,
+    flexDirection: 'row' as const,
+    justifyContent: 'center' as const,
+    alignItems: 'center' as const,
+    gap: '10px' as const,
+    marginTop: '90px' as const,
+  },
+  title: {
+    fontSize: '28px' as const,
+    fontWeight: 'bold' as const,
+    position: 'absolute' as const,
+    top: '10px' as const,
+    left: '50%' as const,
+    transform: 'translateX(-50%)' as const,
+  },
 };
 
 function App() {
@@ -18,7 +29,8 @@ function App() {
 
   return (
     <>
-      <div style={style}>
+      <p style={style.title}>World Time Zones</p>
+      <div style={style.wrapper}>
         <ClockMinus offsetHours={offsetHours} />
         <ClockMain
           offsetHours={offsetHours}
@@ -26,7 +38,6 @@ function App() {
         />
         <ClockPlus offsetHours={offsetHours} />
       </div>
-
       <WorldMap offsetHours={offsetHours} />
     </>
   );
