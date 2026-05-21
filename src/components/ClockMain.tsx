@@ -1,4 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useUnwrappedDisplayAngle } from './hooks/useUnwrappedDisplayAngle';
+import { resolveHourOffset } from '../lib/resolveHourOffset';
 import styles from '../styles/clockMain.module.css';
 
 function getHourHandAngle(date: Date) {
@@ -23,11 +25,14 @@ export function ClockMain({
   );
   const hourHandRef = useRef<HTMLDivElement | null>(null);
   const activePointerIdRef = useRef<number | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   const angleDeg = useMemo(() => {
     const raw = baseAngleDeg + offsetHours * 30;
     return ((raw % 360) + 360) % 360; // normalize to 0..359
   }, [baseAngleDeg, offsetHours]);
+
+  const displayAngleDeg = useUnwrappedDisplayAngle(angleDeg);
 
   function snapAngleToHour(deg: number) {
     const snapped = Math.round(deg / 30) * 30;
@@ -64,9 +69,11 @@ export function ClockMain({
     const snappedAngle = snapAngleToHour(pointerAngle); // 0..359 step of 30
     const targetHourIndex = snappedAngle / 30; // 0..11
 
-    // Choose the shortest signed shift in range roughly [-6..6].
-    let diff = (targetHourIndex - baseHourIndex + 12) % 12; // 0..11 forward steps
-    if (diff > 6) diff -= 12; // map to negative steps
+    const diff = resolveHourOffset(
+      baseHourIndex,
+      targetHourIndex,
+      offsetHours,
+    );
 
     onOffsetHoursChange?.(diff);
   }
@@ -92,13 +99,14 @@ export function ClockMain({
     };
   }, []);
 
-  const cssVars = { '--angle-deg': `${angleDeg}deg` } as React.CSSProperties;
+  const cssVars = { '--angle-deg': `${displayAngleDeg}deg` } as React.CSSProperties;
 
   function onPointerDown(e: React.PointerEvent<HTMLDivElement>) {
     // Left mouse button only (touch/pen has button=0 or undefined depending on browser).
     if (typeof e.button === 'number' && e.button !== 0) return;
 
     activePointerIdRef.current = e.pointerId;
+    setIsDragging(true);
     e.currentTarget.setPointerCapture(e.pointerId);
 
     if (e.cancelable) e.preventDefault();
@@ -114,6 +122,7 @@ export function ClockMain({
   function onPointerUp(e: React.PointerEvent<HTMLDivElement>) {
     if (activePointerIdRef.current !== e.pointerId) return;
     activePointerIdRef.current = null;
+    setIsDragging(false);
     try {
       e.currentTarget.releasePointerCapture(e.pointerId);
     } catch {
@@ -139,7 +148,7 @@ export function ClockMain({
       <div
         ref={hourHandRef}
         id='hour-hand'
-        className={styles.hand}
+        className={`${styles.hand} ${isDragging ? styles.handDragging : ''}`}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}

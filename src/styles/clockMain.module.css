@@ -90,10 +90,14 @@
   height: 32%;
   transform-origin: 50% 100%;
   transform: translate(-50%, -100%) rotate(var(--angle-deg));
-  transition: transform 180ms ease-out;
+  transition: transform 350ms cubic-bezier(0.4, 0, 0.2, 1);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.6));
   border-radius: 8px;
   box-shadow: 0 6px 16px var(--shadow);
+}
+
+.handDragging {
+  transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hand::before {
