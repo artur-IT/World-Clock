@@ -1,0 +1,46 @@
+.worldMap {
+  width: 100%;
+  margin-top: 5rem;
+  background-image: url('../assets/world_map.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-position-y: 18px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(25, 1fr);
+  width: 100%;
+  border: 1px solid var(--border);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  border-inline-end: 1px solid var(--border);
+}
+
+.column:last-child {
+  border-inline-end: none;
+}
+
+.zoneHeader {
+  padding: 2px;
+  font-size: 11px;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--text-h);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono);
+}
+
+.zone {
+  flex: 1;
+  min-height: 300px;
+  height: auto;
+}
+
+.zoneActive {
+  background-color: rgba(128, 128, 128, 0.5);
+}

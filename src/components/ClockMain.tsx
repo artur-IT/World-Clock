@@ -69,11 +69,7 @@ export function ClockMain({
     const snappedAngle = snapAngleToHour(pointerAngle); // 0..359 step of 30
     const targetHourIndex = snappedAngle / 30; // 0..11
 
-    const diff = resolveHourOffset(
-      baseHourIndex,
-      targetHourIndex,
-      offsetHours,
-    );
+    const diff = resolveHourOffset(baseHourIndex, targetHourIndex, offsetHours);
 
     onOffsetHoursChange?.(diff);
   }
@@ -99,7 +95,9 @@ export function ClockMain({
     };
   }, []);
 
-  const cssVars = { '--angle-deg': `${displayAngleDeg}deg` } as React.CSSProperties;
+  const cssVars = {
+    '--angle-deg': `${displayAngleDeg}deg`,
+  } as React.CSSProperties;
 
   function onPointerDown(e: React.PointerEvent<HTMLDivElement>) {
     // Left mouse button only (touch/pen has button=0 or undefined depending on browser).
@@ -156,6 +154,7 @@ export function ClockMain({
         aria-label='Draggable clock hand'
       />
       <div className={styles.centerCap} />
+      <p className={styles.title}>Your Hour</p>
     </div>
   );
 }

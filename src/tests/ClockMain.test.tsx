@@ -15,10 +15,15 @@ describe('resolveHourOffset', () => {
     expect(resolveHourOffset(baseHourIndex, target11, -1)).toBe(-2);
   });
 
-  it('clamps offset to ±11 hours from the current hour', () => {
+  it('clamps offset to ±12 hours from the current hour', () => {
     expect(resolveHourOffset(1, 2, 0)).toBe(1);
     expect(resolveHourOffset(1, 2, 12)).toBe(1);
     expect(resolveHourOffset(1, 2, -12)).toBe(-11);
+  });
+
+  it('reaches +12 or -12 instead of jumping back to 0', () => {
+    expect(resolveHourOffset(3, 3, 11)).toBe(12);
+    expect(resolveHourOffset(3, 3, -11)).toBe(-12);
   });
 });
 
