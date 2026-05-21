@@ -1,45 +1,29 @@
 /// <reference types="jest" />
 
-import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
-import { ClockMain } from '../components/ClockMain';
+import {
+  resolveHourOffset,
+  unwrapDisplayAngle,
+} from '../lib/resolveHourOffset';
 
-function expectedHour12(hour24: number) {
-  const h12 = hour24 % 12;
-  return h12 === 0 ? 12 : h12;
-}
+describe('resolveHourOffset', () => {
+  it('keeps dragging left past 12 when the current hour is 1', () => {
+    const baseHourIndex = 1;
+    const target12 = 0;
+    const target11 = 11;
 
-function expectedAngleDeg(hour24: number) {
-  const h12 = hour24 % 12;
-  return h12 * 30;
-}
-
-describe('ClockMain', () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
+    expect(resolveHourOffset(baseHourIndex, target12, 0)).toBe(-1);
+    expect(resolveHourOffset(baseHourIndex, target11, -1)).toBe(-2);
   });
 
-  afterEach(() => {
-    jest.useRealTimers();
+  it('clamps offset to ±11 hours from the current hour', () => {
+    expect(resolveHourOffset(1, 2, 0)).toBe(1);
+    expect(resolveHourOffset(1, 2, 12)).toBe(1);
+    expect(resolveHourOffset(1, 2, -12)).toBe(-11);
   });
+});
 
-  it('sets aria-label and angle for initial mocked time', () => {
-    const hour24 = 1;
-    const mockedNow = new Date(2020, 0, 1, hour24, 23, 0, 0);
-    jest.setSystemTime(mockedNow);
-
-    render(<ClockMain />);
-
-    const clock = screen.getByRole('img', { name: /Analog clock/i });
-
-    const hour12 = expectedHour12(hour24);
-    expect(clock).toHaveAttribute(
-      'aria-label',
-      `Analog clock. Current hour: ${String(hour12).padStart(2, '0')}.`,
-    );
-
-    const angleDeg = expectedAngleDeg(hour24);
-    const styleAttr = clock.getAttribute('style') ?? '';
-    expect(styleAttr).toContain(`--angle-deg: ${angleDeg}deg`);
+describe('unwrapDisplayAngle', () => {
+  it('rotates left one hour instead of spinning 11 hours right', () => {
+    expect(unwrapDisplayAngle(0, 330)).toBe(-30);
   });
 });

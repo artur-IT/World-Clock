@@ -1,6 +1,6 @@
 import { type CSSProperties, useEffect, useMemo, useState } from 'react';
+import { useUnwrappedDisplayAngle } from './hooks/useUnwrappedDisplayAngle';
 import styles from '../styles/clockMain.module.css';
-
 const DIAL_NUMBERS = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as const;
 
 type ClockPlusProps = {
@@ -47,9 +47,10 @@ export function ClockPlus({ offsetHours = 0 }: ClockPlusProps) {
     return snapAngleToHour(raw);
   }, [baseAngleDeg, offsetHours]);
 
+  const displayAngleDeg = useUnwrappedDisplayAngle(angleDeg);
+
   const cssVars = {
-    '--angle-deg': `${angleDeg}deg`,
-    '--size': '160px',
+    '--angle-deg': `${displayAngleDeg}deg`,    '--size': '160px',
     '--bg': 'rgb(255, 215, 0)',
   } as CSSProperties;
 
