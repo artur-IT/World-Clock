@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import styles from '../styles/clockMain.module.css';
 import { useUnwrappedDisplayAngle } from './hooks/useUnwrappedDisplayAngle';
 import { resolveHourOffset } from '../lib/resolveHourOffset';
-import styles from '../styles/clockMain.module.css';
 
 function getHourHandAngle(date: Date) {
   const h12 = date.getHours() % 12;
@@ -129,7 +129,7 @@ export function ClockMain({
   }
 
   return (
-    <div className={styles.clockMain} style={cssVars} role='img'>
+    <div className={styles.clockMain} style={cssVars}>
       <div className={styles.dialNumbers} aria-hidden='true'>
         {DIAL_NUMBERS.map((label, idx) => {
           const numClass = styles[`num${idx + 1}`];
@@ -154,7 +154,6 @@ export function ClockMain({
         aria-label='Draggable clock hand'
       />
       <div className={styles.centerCap} />
-      <p className={styles.title}>Your Hour</p>
     </div>
   );
 }

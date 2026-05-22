@@ -1,31 +1,32 @@
 .worldMap {
   width: 100%;
-  margin-top: 5rem;
-  background-image: url('../assets/world_map.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-position-y: 18px;
+  max-width: 100%;
+  margin-top: 20px;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(25, 1fr);
+  grid-template-columns: repeat(25, minmax(0, 1fr));
+  grid-template-rows: auto minmax(300px, auto);
   width: 100%;
+  min-width: 0;
   border: 1px solid var(--border);
 }
 
-.column {
-  display: flex;
-  flex-direction: column;
-  border-inline-end: 1px solid var(--border);
-}
-
-.column:last-child {
-  border-inline-end: none;
+/* Map spans all 25 columns (-12 … +12) in the zone row */
+.worldMapImage {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  object-fit: fill;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .zoneHeader {
+  grid-row: 1;
   padding: 2px;
   font-size: 11px;
   line-height: 1.2;
@@ -33,14 +34,42 @@
   color: var(--text-h);
   border-bottom: 1px solid var(--border);
   font-family: var(--mono);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.column {
+  grid-row: 2;
+  min-width: 0;
+  min-height: 300px;
+  z-index: 1;
 }
 
 .zone {
-  flex: 1;
+  width: 100%;
+  height: 100%;
   min-height: 300px;
-  height: auto;
 }
 
 .zoneActive {
   background-color: rgba(128, 128, 128, 0.5);
+}
+
+@media (max-width: 768px) {
+  .worldMap {
+    margin-top: 180px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .zoneHeader {
+    font-size: 9px;
+    padding: 1px;
+  }
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
+  .worldMap {
+    margin-top: 20px;
+  }
 }

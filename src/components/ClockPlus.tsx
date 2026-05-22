@@ -1,6 +1,7 @@
 import { type CSSProperties, useEffect, useMemo, useState } from 'react';
 import { useUnwrappedDisplayAngle } from './hooks/useUnwrappedDisplayAngle';
 import styles from '../styles/clockMain.module.css';
+import stylesPlus from '../styles/clockPlus.module.css';
 const DIAL_NUMBERS = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as const;
 
 type ClockPlusProps = {
@@ -51,13 +52,16 @@ export function ClockPlus({ offsetHours = 0 }: ClockPlusProps) {
 
   const cssVars = {
     '--angle-deg': `${displayAngleDeg}deg`,
-    '--size': '160px',
-    '--bg': 'rgb(255, 215, 0)',
+    '--size': '150px',
+    '--bg': 'rgb(255, 145, 0)',
   } as CSSProperties;
 
   return (
-    <div className={styles.clockMain} style={cssVars} role='img'>
-      <div className={styles.dialNumbers} aria-hidden='true'>
+    <section
+      className={`${styles.clockMain} ${stylesPlus.clockPlus}`}
+      style={cssVars}
+    >
+      <div className={styles.dialNumbers}>
         {DIAL_NUMBERS.map((label, idx) => {
           const numClass = styles[`num${idx + 1}`];
           return (
@@ -72,7 +76,7 @@ export function ClockPlus({ offsetHours = 0 }: ClockPlusProps) {
       </div>
       <div className={styles.hand} style={{ width: '0.4rem' }} />
       <div className={styles.centerCap} />
-      <p className={styles.title}>+1 Hour</p>
-    </div>
+      <p className={stylesPlus.title}>+1 Hour</p>
+    </section>
   );
 }
