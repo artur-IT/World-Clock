@@ -1,7 +1,6 @@
 :root {
   --text: #6b6375;
   --text-h: #08060d;
-  --bg: #fff;
   --border: #e5e4e7;
   --code-bg: #f4f3ec;
   --accent: #aa3bff;
@@ -17,26 +16,69 @@
 
   font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
-  color-scheme: light dark;
   color: var(--text);
-  background: var(--bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  min-height: 100svh;
   display: flex;
   flex-direction: column;
+  align-items: center;
   box-sizing: border-box;
+}
+
+.title {
+  font-size: 28px;
+  margin: 50px auto;
+  text-align: center;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto;
+}
+
+.clockWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer {
+  margin-top: 30px;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  #root {
+    width: 100vw;
+    font-size: 16px;
+  }
+
+  .title {
+    margin: 25px 0;
+    font-size: 22px;
+  }
+
+  .footer {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 100%;
+    font-size: 10px;
+  }
 }

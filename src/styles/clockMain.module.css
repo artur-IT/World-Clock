@@ -1,5 +1,7 @@
 .clockMain {
   --size: 300px;
+  --num-font: 1.6rem;
+  --num-radius: 120px;
   --ring: rgba(0, 0, 0, 0.35);
   --hand: rgba(255, 255, 255, 0.95);
   --shadow: rgba(0, 0, 0, 0.35);
@@ -11,7 +13,6 @@
   background: var(--bg);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
   border: 2px solid var(--ring);
-  user-select: none;
 }
 
 .dialNumbers {
@@ -26,60 +27,59 @@
   left: 50%;
   top: 50%;
   transform-origin: center;
-  /* Scale numbers with dial size */
-  font-size: calc(1.6rem * var(--size) / 300px);
+  font-size: calc(var(--num-font) * var(--size) / 300px);
+  line-height: 1;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.9);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  user-select: none;
 }
 
 .num1 {
-  transform: translate(-50%, -50%) rotate(0deg) translateY(calc(-128px * var(--size) / 300px)) rotate(0deg);
+  transform: translate(-50%, -50%) rotate(0deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(0deg);
 }
 
 .num2 {
-  transform: translate(-50%, -50%) rotate(30deg) translateY(calc(-128px * var(--size) / 300px)) rotate(-30deg);
+  transform: translate(-50%, -50%) rotate(30deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-30deg);
 }
 
 .num3 {
-  transform: translate(-50%, -50%) rotate(60deg) translateY(calc(-128px * var(--size) / 300px)) rotate(-60deg);
+  transform: translate(-50%, -50%) rotate(60deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-60deg);
 }
 
 .num4 {
-  transform: translate(-50%, -50%) rotate(90deg) translateY(calc(-128px * var(--size) / 300px)) rotate(-90deg);
+  transform: translate(-50%, -50%) rotate(90deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-90deg);
 }
 
 .num5 {
-  transform: translate(-50%, -50%) rotate(120deg) translateY(calc(-128px * var(--size) / 300px)) rotate(-120deg);
+  transform: translate(-50%, -50%) rotate(120deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-120deg);
 }
 
 .num6 {
-  transform: translate(-50%, -50%) rotate(150deg) translateY(calc(-128px * var(--size) / 300px)) rotate(-150deg);
+  transform: translate(-50%, -50%) rotate(150deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-150deg);
 }
 
 .num7 {
-  transform: translate(-50%, -50%) rotate(180deg) translateY(calc(-128px * var(--size) / 300px)) rotate(-180deg);
+  transform: translate(-50%, -50%) rotate(180deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-180deg);
 }
 
 .num8 {
-  transform: translate(-50%, -50%) rotate(210deg) translateY(calc(-128px * var(--size) / 300px)) rotate(-210deg);
+  transform: translate(-50%, -50%) rotate(210deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-210deg);
 }
 
 .num9 {
-  transform: translate(-50%, -50%) rotate(240deg) translateY(calc(-128px * var(--size) / 300px)) rotate(-240deg);
+  transform: translate(-50%, -50%) rotate(240deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-240deg);
 }
 
 .num10 {
-  transform: translate(-50%, -50%) rotate(270deg) translateY(calc(-128px * var(--size) / 300px)) rotate(-270deg);
+  transform: translate(-50%, -50%) rotate(270deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-270deg);
 }
 
 .num11 {
-  transform: translate(-50%, -50%) rotate(300deg) translateY(calc(-128px * var(--size) / 300px)) rotate(-300deg);
+  transform: translate(-50%, -50%) rotate(300deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-300deg);
 }
 
 .num12 {
-  transform: translate(-50%, -50%) rotate(330deg) translateY(calc(-128px * var(--size) / 300px)) rotate(-330deg);
+  transform: translate(-50%, -50%) rotate(330deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-330deg);
 }
 
 .hand {
@@ -87,7 +87,7 @@
   left: 50%;
   top: 50%;
   width: 0.6rem;
-  height: 32%;
+  height: 28%;
   transform-origin: 50% 100%;
   transform: translate(-50%, -100%) rotate(var(--angle-deg));
   transition: transform 350ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -101,7 +101,6 @@
 }
 
 .hand::before {
-  /* hand tip */
   content: '';
   position: absolute;
   left: 50%;
@@ -126,23 +125,12 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
-.title {
-  position: relative;
-  left: 50%;
-  top: 100%;
-  margin-top: 30px;
-  transform: translate(-50%, -50%);
-  font-size: 22px;
-}
 
-.srOnly {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+
+@media (max-width: 768px) {
+  .clockMain {
+    --size: 230px;
+    --num-radius: 118px;
+    --num-font: 1.45rem;
+  }
 }

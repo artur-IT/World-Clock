@@ -1,6 +1,7 @@
 .worldMap {
   width: 100%;
-  margin-top: 5rem;
+  max-width: 100%;
+  margin-top: 50px;
   background-image: url('../assets/world_map.png');
   background-size: cover;
   background-position: center;
@@ -10,14 +11,16 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(25, 1fr);
+  grid-template-columns: repeat(25, minmax(0, 1fr));
   width: 100%;
+  min-width: 0;
   border: 1px solid var(--border);
 }
 
 .column {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   border-inline-end: 1px solid var(--border);
 }
 
@@ -33,6 +36,9 @@
   color: var(--text-h);
   border-bottom: 1px solid var(--border);
   font-family: var(--mono);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .zone {
@@ -43,4 +49,17 @@
 
 .zoneActive {
   background-color: rgba(128, 128, 128, 0.5);
+}
+
+@media (max-width: 768px) {
+  .worldMap {
+    margin-top: 200px;
+    background-size: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .zoneHeader {
+    font-size: 9px;
+    padding: 1px;
+  }
 }
