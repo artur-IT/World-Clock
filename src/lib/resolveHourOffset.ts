@@ -6,8 +6,7 @@ export function resolveHourOffset(
   targetHourIndex: number,
   currentOffset: number,
 ): number {
-  const forward =
-    (targetHourIndex - baseHourIndex + 12) % 12; // 0..11 clockwise steps
+  const forward = (targetHourIndex - baseHourIndex + 12) % 12; // 0..11 clockwise steps
 
   // Same dial position can mean 0, +12, or -12; keep dragging past ±11.
   const candidates = forward === 0 ? [0, 12, -12] : [forward, forward - 12];
