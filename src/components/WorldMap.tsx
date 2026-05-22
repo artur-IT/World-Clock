@@ -4,6 +4,7 @@ import {
   UTC_OFFSETS,
 } from '../lib/getActiveTimeZoneIndex';
 import styles from '../styles/worldMap.module.css';
+import worldMapImage from '../assets/world_map.avif';
 
 type WorldMapProps = {
   offsetHours?: number;
@@ -15,18 +16,32 @@ export function WorldMap({ offsetHours = 0 }: WorldMapProps) {
   return (
     <section className={styles.worldMap} aria-label='World time zones'>
       <div className={styles.grid}>
+        {UTC_OFFSETS.map((utcOffset, zoneIndex) => (
+          <div
+            key={`header-${utcOffset}`}
+            className={styles.zoneHeader}
+            style={{ gridColumn: zoneIndex + 1 }}
+          >
+            {formatUtcOffsetLabel(utcOffset)}
+          </div>
+        ))}
+        <img
+          src={worldMapImage}
+          alt='world map'
+          aria-hidden
+          className={styles.worldMapImage}
+          fetchPriority='high'
+        />
         {UTC_OFFSETS.map((utcOffset, zoneIndex) => {
           const isActive = zoneIndex === activeZone;
 
           return (
             <div
-              key={utcOffset}
+              key={`zone-${utcOffset}`}
               className={styles.column}
               data-zone-offset={utcOffset}
+              style={{ gridColumn: zoneIndex + 1 }}
             >
-              <div className={styles.zoneHeader}>
-                {formatUtcOffsetLabel(utcOffset)}
-              </div>
               <div
                 className={`${styles.zone} ${isActive ? styles.zoneActive : ''}`}
                 data-zone-index={zoneIndex}

@@ -9,7 +9,7 @@
 @media (max-width: 768px) {
   .clockPlus {
     position: absolute;
-    top: 70%;
+    top: 65%;
     left: 75%;
     transform: translate(-50%, -100%);
   }
@@ -17,5 +17,12 @@
   .title {
     margin-top: 10px;
     font-size: 16px;
+  }
+}
+
+
+@media (max-width: 768px) and (orientation: landscape) {
+  .clockPlus {
+    left: 80%;
   }
 }
