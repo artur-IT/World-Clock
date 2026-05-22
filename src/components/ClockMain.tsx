@@ -1,14 +1,40 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+  type PointerEvent,
+} from 'react';
 import styles from '../styles/clockMain.module.css';
 import { useUnwrappedDisplayAngle } from './hooks/useUnwrappedDisplayAngle';
 import { resolveHourOffset } from '../lib/resolveHourOffset';
 
-function getHourHandAngle(date: Date) {
-  const h12 = date.getHours() % 12;
-  return h12 * 30; // 360 / 12 = 30 deg per hour
-}
+const HOUR_NUMBERS = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as const;
 
-const DIAL_NUMBERS = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as const;
+const normalizeAngleDeg = (deg: number) => ((deg % 360) + 360) % 360; // always 0..359
+
+const getHourHandAngle = (date: Date) => (date.getHours() % 12) * 30; // 30deg per hour
+
+const snapAngleToHour = (deg: number) =>
+  normalizeAngleDeg(Math.round(deg / 30) * 30); // step of 30deg (12h dial)
+
+function getAngleDegFromPointer(
+  el: HTMLDivElement,
+  clientX: number,
+  clientY: number,
+) {
+  const rect = el.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+
+  const dx = clientX - cx;
+  const dy = clientY - cy;
+
+  // 0deg at 12 o'clock, increasing clockwise.
+  const rawDeg = (Math.atan2(dy, dx) * 180) / Math.PI;
+  return normalizeAngleDeg(rawDeg + 90);
+}
 
 type ClockMainProps = {
   offsetHours?: number;
@@ -29,41 +55,22 @@ export function ClockMain({
 
   const angleDeg = useMemo(() => {
     const raw = baseAngleDeg + offsetHours * 30;
-    return ((raw % 360) + 360) % 360; // normalize to 0..359
+    return normalizeAngleDeg(raw);
   }, [baseAngleDeg, offsetHours]);
 
   const displayAngleDeg = useUnwrappedDisplayAngle(angleDeg);
 
-  function snapAngleToHour(deg: number) {
-    const snapped = Math.round(deg / 30) * 30;
-    return ((snapped % 360) + 360) % 360; // ensure 0..359
-  }
-
-  function angleFromPointer(clientX: number, clientY: number) {
+  const getAngleFromPointer = (clientX: number, clientY: number) => {
     const el = hourHandRef.current;
     if (!el) return null;
+    return getAngleDegFromPointer(el, clientX, clientY);
+  };
 
-    const rect = el.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-
-    const dx = clientX - cx;
-    const dy = clientY - cy;
-
-    // Avoid weird jumps when the pointer is very close to the center.
-    const minDistPx = Math.max(10, rect.width * 0.05);
-    if (dx * dx + dy * dy < minDistPx * minDistPx) return null;
-
-    // 0deg at 12 o'clock, increasing clockwise.
-    const deg = (Math.atan2(dy, dx) * 180) / Math.PI;
-    return (deg + 90 + 360) % 360;
-  }
-
-  function setOffsetFromPointer(clientX: number, clientY: number) {
+  const setOffsetFromPointer = (clientX: number, clientY: number) => {
     const base = new Date();
     const baseHourIndex = base.getHours() % 12; // 0..11
 
-    const pointerAngle = angleFromPointer(clientX, clientY);
+    const pointerAngle = getAngleFromPointer(clientX, clientY);
     if (pointerAngle === null) return;
 
     const snappedAngle = snapAngleToHour(pointerAngle); // 0..359 step of 30
@@ -72,7 +79,7 @@ export function ClockMain({
     const diff = resolveHourOffset(baseHourIndex, targetHourIndex, offsetHours);
 
     onOffsetHoursChange?.(diff);
-  }
+  };
 
   useEffect(() => {
     // Update only when the hour changes.
@@ -97,10 +104,10 @@ export function ClockMain({
 
   const cssVars = {
     '--angle-deg': `${displayAngleDeg}deg`,
-  } as React.CSSProperties;
+  } as CSSProperties;
 
-  function onPointerDown(e: React.PointerEvent<HTMLDivElement>) {
-    // Left mouse button only (touch/pen has button=0 or undefined depending on browser).
+  const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
+    // Only react to "primary" mouse button; touch events usually come with button=0.
     if (typeof e.button === 'number' && e.button !== 0) return;
 
     activePointerIdRef.current = e.pointerId;
@@ -109,15 +116,15 @@ export function ClockMain({
 
     if (e.cancelable) e.preventDefault();
     setOffsetFromPointer(e.clientX, e.clientY);
-  }
+  };
 
-  function onPointerMove(e: React.PointerEvent<HTMLDivElement>) {
+  const onPointerMove = (e: PointerEvent<HTMLDivElement>) => {
     if (activePointerIdRef.current !== e.pointerId) return;
     if (e.cancelable) e.preventDefault();
     setOffsetFromPointer(e.clientX, e.clientY);
-  }
+  };
 
-  function onPointerUp(e: React.PointerEvent<HTMLDivElement>) {
+  const onPointerUp = (e: PointerEvent<HTMLDivElement>) => {
     if (activePointerIdRef.current !== e.pointerId) return;
     activePointerIdRef.current = null;
     setIsDragging(false);
@@ -126,12 +133,12 @@ export function ClockMain({
     } catch {
       // Some browsers can throw if capture is already released.
     }
-  }
+  };
 
   return (
     <div className={styles.clockMain} style={cssVars}>
       <div className={styles.dialNumbers} aria-hidden='true'>
-        {DIAL_NUMBERS.map((label, idx) => {
+        {HOUR_NUMBERS.map((label, idx) => {
           const numClass = styles[`num${idx + 1}`];
           return (
             <span
