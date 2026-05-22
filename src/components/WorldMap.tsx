@@ -10,6 +10,7 @@ type WorldMapProps = {
   offsetHours?: number;
 };
 
+/** World map grid with UTC columns; highlights the zone for the current offset. */
 export function WorldMap({ offsetHours = 0 }: WorldMapProps) {
   const activeZone = getActiveTimeZoneIndex(offsetHours);
 
