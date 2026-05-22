@@ -1,0 +1,26 @@
+---
+description: General rules for the whole project, always applied together with other rules!
+globs:
+alwaysApply: true
+---
+
+## Tech stack
+
+- **Frontend**: HTML5, CSS3, JavaScript, TypeScript 5, React 19.2
+- **Style**: global.css
+- **Builder**: Vercel
+- **Test**: Jest, React Testing Library
+- **Hosting**: GitHub Pages
+
+## Project structure
+
+Follow this layout when adding or changing code. When you change the structure, update this section and `.cursor/rules` if needed.
+
+- `./src` - Source code
+- `./src/components` - Shared app-level components and generic UI
+- `./src/components/hooks` - Custom hooks
+- `./src/styles` - styles
+- `./src/tests` - tests
+- `./src/assets` - assets
+
+When modifying the directory structure, always update this section.
