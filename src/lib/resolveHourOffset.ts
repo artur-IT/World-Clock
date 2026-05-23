@@ -1,4 +1,5 @@
-const MAX_OFFSET_HOURS = 12;
+import { normalizeAngleDeg } from './clockMath';
+import { UTC_OFFSET_MAX } from './getActiveTimeZoneIndex';
 
 /** Pick offset closest to the current drag position, clamped to ±12 hours. */
 export function resolveHourOffset(
@@ -23,7 +24,7 @@ export function resolveHourOffset(
     }
   }
 
-  return Math.max(-MAX_OFFSET_HOURS, Math.min(MAX_OFFSET_HOURS, best));
+  return Math.max(-UTC_OFFSET_MAX, Math.min(UTC_OFFSET_MAX, best));
 }
 
 /** Keep CSS rotation on the shortest path between hour steps. */
@@ -31,7 +32,7 @@ export function unwrapDisplayAngle(
   prevUnwrapped: number,
   nextNormalized: number,
 ): number {
-  const prevNorm = ((prevUnwrapped % 360) + 360) % 360;
+  const prevNorm = normalizeAngleDeg(prevUnwrapped);
   let delta = nextNormalized - prevNorm;
   if (delta > 180) delta -= 360;
   if (delta < -180) delta += 360;

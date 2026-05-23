@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { ClockMinus } from './components/ClockMinus';
 import { ClockMain } from './components/ClockMain';
-import { ClockPlus } from './components/ClockPlus';
+import { SmallClock } from './components/SmallClock';
 import { WorldMap } from './components/WorldMap';
 import styles from './styles/App.module.css';
 
@@ -13,12 +12,12 @@ function App() {
       <header className={styles.title}>World Time Zones Clock</header>
       <main className={styles.wrapper}>
         <section className={styles.clockWrapper}>
-          <ClockMinus offsetHours={offsetHours} />
+          <SmallClock offsetHours={offsetHours} variant='minus' />
           <ClockMain
             offsetHours={offsetHours}
             onOffsetHoursChange={setOffsetHours}
           />
-          <ClockPlus offsetHours={offsetHours} />
+          <SmallClock offsetHours={offsetHours} variant='plus' />
         </section>
         <WorldMap offsetHours={offsetHours} />
       </main>

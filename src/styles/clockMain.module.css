@@ -1,7 +1,9 @@
 .clockMain {
   --size: 300px;
   --num-font: 1.6rem;
-  --num-radius: 120px;
+  /* Unitless radius scales with --size; avoids px*px calc inside transform (Firefox). */
+  --num-radius: 120;
+  --dial-radius: calc(var(--num-radius) / 300 * var(--size));
   --ring: rgba(0, 0, 0, 0.35);
   --hand: rgba(255, 255, 255, 0.95);
   --shadow: rgba(0, 0, 0, 0.35);
@@ -36,51 +38,51 @@
 }
 
 .num1 {
-  transform: translate(-50%, -50%) rotate(0deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(0deg);
+  transform: translate(-50%, -50%) rotate(0deg) translateY(calc(-1 * var(--dial-radius))) rotate(0deg);
 }
 
 .num2 {
-  transform: translate(-50%, -50%) rotate(30deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-30deg);
+  transform: translate(-50%, -50%) rotate(30deg) translateY(calc(-1 * var(--dial-radius))) rotate(-30deg);
 }
 
 .num3 {
-  transform: translate(-50%, -50%) rotate(60deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-60deg);
+  transform: translate(-50%, -50%) rotate(60deg) translateY(calc(-1 * var(--dial-radius))) rotate(-60deg);
 }
 
 .num4 {
-  transform: translate(-50%, -50%) rotate(90deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-90deg);
+  transform: translate(-50%, -50%) rotate(90deg) translateY(calc(-1 * var(--dial-radius))) rotate(-90deg);
 }
 
 .num5 {
-  transform: translate(-50%, -50%) rotate(120deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-120deg);
+  transform: translate(-50%, -50%) rotate(120deg) translateY(calc(-1 * var(--dial-radius))) rotate(-120deg);
 }
 
 .num6 {
-  transform: translate(-50%, -50%) rotate(150deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-150deg);
+  transform: translate(-50%, -50%) rotate(150deg) translateY(calc(-1 * var(--dial-radius))) rotate(-150deg);
 }
 
 .num7 {
-  transform: translate(-50%, -50%) rotate(180deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-180deg);
+  transform: translate(-50%, -50%) rotate(180deg) translateY(calc(-1 * var(--dial-radius))) rotate(-180deg);
 }
 
 .num8 {
-  transform: translate(-50%, -50%) rotate(210deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-210deg);
+  transform: translate(-50%, -50%) rotate(210deg) translateY(calc(-1 * var(--dial-radius))) rotate(-210deg);
 }
 
 .num9 {
-  transform: translate(-50%, -50%) rotate(240deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-240deg);
+  transform: translate(-50%, -50%) rotate(240deg) translateY(calc(-1 * var(--dial-radius))) rotate(-240deg);
 }
 
 .num10 {
-  transform: translate(-50%, -50%) rotate(270deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-270deg);
+  transform: translate(-50%, -50%) rotate(270deg) translateY(calc(-1 * var(--dial-radius))) rotate(-270deg);
 }
 
 .num11 {
-  transform: translate(-50%, -50%) rotate(300deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-300deg);
+  transform: translate(-50%, -50%) rotate(300deg) translateY(calc(-1 * var(--dial-radius))) rotate(-300deg);
 }
 
 .num12 {
-  transform: translate(-50%, -50%) rotate(330deg) translateY(calc(-1 * var(--num-radius) * var(--size) / 300px)) rotate(-330deg);
+  transform: translate(-50%, -50%) rotate(330deg) translateY(calc(-1 * var(--dial-radius))) rotate(-330deg);
 }
 
 .hand {
@@ -131,7 +133,7 @@
 @media (max-width: 768px) {
   .clockMain {
     --size: 230px;
-    --num-radius: 118px;
+    --num-radius: 118;
     --num-font: 1.45rem;
   }
 }
