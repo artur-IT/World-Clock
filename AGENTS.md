@@ -7,7 +7,6 @@ World Clock is a web application that allows you to view the current time in dif
 - Start time on main clock is actual time in UTC from local device time.
 - User can grab tip and change time by dragging to another hour on shield.
 - Only main big clock is interactive.
-- User can change time zone by clicking time zone on map.
 - User can see current time in main clock and two small clocks.
 - User can see time in other time zones on map.
 - When user change hour on main clock shield - time in small clocks should be updated automatically.
@@ -15,14 +14,15 @@ World Clock is a web application that allows you to view the current time in dif
 
 ### Project structure
 
-The project is a single-page application built with React. The app is styled with CSS. The app is tested with Jest and React Testing Library.
+The project is a single-page application built with React.
+The app is styled with CSS.
+The app is tested with Jest and React Testing Library.
 
 ### Project goals
 
 1. The app should be a simple and easy to use clock app.
-2. The app should be responsive and work on all devices. The app should be fast and efficient.
-3. The app should be secure.
-4. The app should be small and lightweight.
+2. The app should be responsive and work on all devices.
+3. The app should be small and lightweight.
 
 ## Coding practices
 

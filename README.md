@@ -23,3 +23,12 @@ Small recruitment project for frontend developer position.
 - User can see time in other time zones on map.
 - When user change hour on main clock shield - time in small clocks is updated automatically.
 - When user change hour on main clock shield - time zones in world map is updated automatically.
+
+### Installation
+
+```bash
+npm install
+npm run dev - run on localhost
+npm run deploy - to build the app on GitHub Pages
+npm run test:watch - run tests in watch mode
+```
