@@ -4,7 +4,7 @@ import {
   UTC_OFFSETS,
 } from '../lib/getActiveTimeZoneIndex';
 import styles from '../styles/worldMap.module.css';
-import worldMapImage from '../assets/world_map.avif';
+import worldMapImage from '../assets/world_map.webp';
 
 type WorldMapProps = {
   offsetHours?: number;
